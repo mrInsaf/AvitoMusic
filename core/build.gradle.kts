@@ -35,8 +35,11 @@ android {
 
 dependencies {
     implementation(libs.retrofit2.retrofit)
-    implementation(libs.okhttp)
+    implementation(libs.okhttp3.okhttp)
+    implementation(libs.converter.kotlinx.serialization)
+    implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
+
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
