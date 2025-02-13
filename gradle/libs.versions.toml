@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.1"
+coil = "2.4.0"
 converterKotlinxSerialization = "0.8.0"
 coreKtxVersion = "1.12.0"
 hiltAndroidCompiler = "2.50"
@@ -31,6 +32,7 @@ ui = "1.7.8"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
+coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "converterKotlinxSerialization" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidCompiler" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
