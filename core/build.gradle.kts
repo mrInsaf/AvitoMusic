@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    kotlin("plugin.serialization") version "2.1.0"
+    kotlin("plugin.serialization") version "2.0.0"
     id ("kotlin-kapt")
 }
 
@@ -35,24 +35,24 @@ android {
 }
 
 dependencies {
-    implementation(libs.coil)
+    implementation("io.coil-kt:coil:2.4.0")
 
-    implementation(libs.retrofit2.retrofit)
-    implementation(libs.okhttp3.okhttp)
-    implementation(libs.converter.kotlinx.serialization)
-    implementation(libs.retrofit2.kotlinx.serialization.converter)
-    implementation(libs.kotlinx.serialization.json)
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
 
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    implementation("com.google.dagger:hilt-android:2.55")
+    kapt("com.google.dagger:hilt-compiler:2.55")
 
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
-    implementation(libs.ui)
-    implementation(libs.material3)
-    implementation(libs.androidx.navigation.compose)
+    implementation("androidx.compose.ui:ui:1.7.8")
+    implementation("androidx.compose.material3:material3:1.3.1")
+    implementation("androidx.navigation:navigation-compose:2.8.7")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
