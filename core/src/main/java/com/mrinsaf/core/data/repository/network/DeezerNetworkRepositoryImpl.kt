@@ -1,10 +1,11 @@
-package com.mrinsaf.core.data.repository
+package com.mrinsaf.core.data.repository.network
 
+import androidx.compose.ui.graphics.painter.Painter
 import com.mrinsaf.core.data.model.Track
 import com.mrinsaf.core.data.network.DeezerApi
 
 
-class DeezerNetworkRepository(private val deezerApi: DeezerApi) : DeezerRepository {
+class DeezerNetworkRepositoryImpl(private val deezerApi: DeezerApi) : DeezerNetworkRepository {
 
     override suspend fun getChart(): List<Track> {
         val chartResponse = deezerApi.getChart()
@@ -24,5 +25,9 @@ class DeezerNetworkRepository(private val deezerApi: DeezerApi) : DeezerReposito
         } else {
             throw Exception("Ошибка при поиске треков: ${searchResponse.code()}")
         }
+    }
+
+    override fun createPainter(imageSource: String): Painter {
+        TODO("Not yet implemented")
     }
 }

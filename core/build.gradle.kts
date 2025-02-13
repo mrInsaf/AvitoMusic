@@ -35,6 +35,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.coil)
+
     implementation(libs.retrofit2.retrofit)
     implementation(libs.okhttp3.okhttp)
     implementation(libs.converter.kotlinx.serialization)

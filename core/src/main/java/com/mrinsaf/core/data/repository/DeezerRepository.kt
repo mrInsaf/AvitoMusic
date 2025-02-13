@@ -1,8 +1,7 @@
 package com.mrinsaf.core.data.repository
 
-import com.mrinsaf.core.data.model.Track
+import androidx.compose.ui.graphics.painter.Painter
 
 interface DeezerRepository {
-    suspend fun getChart(): List<Track>
-    suspend fun searchTracks(query: String): List<Track>
+    fun createPainter(imageSource: String): Painter
 }

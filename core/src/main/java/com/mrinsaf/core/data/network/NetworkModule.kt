@@ -1,8 +1,8 @@
 package com.mrinsaf.core.data.network
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.mrinsaf.core.data.repository.DeezerNetworkRepository
 import com.mrinsaf.core.data.repository.DeezerRepository
+import com.mrinsaf.core.data.repository.network.DeezerNetworkRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +29,5 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideDeezerRepository(api: DeezerApi): DeezerRepository = DeezerNetworkRepository(api)
+    fun provideDeezerRepository(api: DeezerApi): DeezerRepository = DeezerNetworkRepositoryImpl(api)
 }
