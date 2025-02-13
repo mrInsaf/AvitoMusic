@@ -23,14 +23,8 @@ data class Track(
     val preview: String,
     @SerialName("md5_image")
     val md5Image: String,
-    val position: Int,
+    val position: Int? = null,
     val artist: Artist,
     val album: Album,
     val type: String
-)
-
-@Serializable
-data class TracksData(
-    @SerialName("data")
-    val tracks: List<Track>
 )
