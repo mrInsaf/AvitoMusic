@@ -2,6 +2,7 @@
 agp = "8.7.1"
 converterKotlinxSerialization = "0.8.0"
 coreKtxVersion = "1.12.0"
+hiltAndroidCompiler = "2.50"
 jetbrainsKotlinxSerializationJson = "1.8.0"
 jetbrainsKotlinxSerializationJsonVersion = "1.5.0"
 kotlin = "2.0.0"
@@ -31,6 +32,8 @@ ui = "1.7.8"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
 converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "converterKotlinxSerialization" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidCompiler" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 jakewharton-retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit2:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2KotlinxSerializationConverterVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
