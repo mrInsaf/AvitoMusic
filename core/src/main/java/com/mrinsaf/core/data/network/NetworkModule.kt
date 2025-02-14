@@ -29,5 +29,5 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideDeezerRepository(api: DeezerApi): DeezerRepository = DeezerNetworkRepositoryImpl(api)
+    fun provideDeezerNetworkRepository(api: DeezerApi): DeezerRepository = DeezerNetworkRepositoryImpl(api)
 }
