@@ -1,9 +1,12 @@
 package com.mrinsaf.avitomusic
 
+import android.os.Build
 import android.os.Bundle
+import android.Manifest
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,19 +25,37 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.mrinsaf.feature_downloaded_tracks.ui.DownloadedTracksScreen
+import com.mrinsaf.feature_downloaded_tracks.ui.screens.DownloadedTracksScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val requestPermissions = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                println("ЗБС")
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions.launch(Manifest.permission.READ_MEDIA_AUDIO)
+        } else {
+            requestPermissions.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
         enableEdgeToEdge()
         setContent {
             MusicApp()
         }
     }
 }
+
 
 @Composable
 fun MusicApp() {
@@ -56,7 +77,11 @@ fun MusicApp() {
                 startDestination = "downloaded_tracks",
                 modifier = Modifier.fillMaxSize()
             ) {
-                composable("downloaded_tracks") { DownloadedTracksScreen(navController) }
+                composable("downloaded_tracks") {
+                    DownloadedTracksScreen(
+                        navController = navController
+                    )
+                }
                 // composable("api_tracks") { ApiTracksScreen(navController) }
                 // composable("player") { PlayerScreen(navController) }
             }
