@@ -34,6 +34,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
+
     implementation(libs.ui)
     implementation(libs.material3)
     implementation(libs.androidx.navigation.compose)
