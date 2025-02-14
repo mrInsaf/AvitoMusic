@@ -27,7 +27,4 @@ class DeezerNetworkRepositoryImpl(private val deezerApi: DeezerApi) : DeezerNetw
         }
     }
 
-    override fun createPainter(imageSource: String): Painter {
-        TODO("Not yet implemented")
-    }
 }
