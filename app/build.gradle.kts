@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
+
+    id("com.google.dagger.hilt.android") version "2.55" apply true
 }
 
 android {
@@ -45,6 +47,8 @@ dependencies {
     implementation(project(":feature_downloaded_tracks"))
     implementation(project(":feature_api_tracks"))
     implementation(project(":feature_player"))
+
+    implementation (libs.androidx.activity.ktx)
 
     implementation("com.google.dagger:hilt-android:2.55")
     kapt("com.google.dagger:hilt-compiler:2.55")
