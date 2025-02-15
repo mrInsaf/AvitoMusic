@@ -20,15 +20,12 @@ fun ChartTracksScreen(
     chartViewModel: ChartTracksViewModel
 ) {
     val uiState = chartViewModel.uiState.collectAsStateWithLifecycle()
-    var query by remember { mutableStateOf("") }
 
     TracksScreen(
         tracks = uiState.value.tracks.map { it.toTrackUiModel() },
         title = stringResource(R.string.chartScreenTitle),
-        query = query,
-        onQueryChange = { println("query change") },
-        onTrackClick = { track ->
-            println("track: ")
-        }
+        query = uiState.value.searchQuery,
+        onQueryChange = { chartViewModel.onQueryChange(it) },
+        onTrackClick = { track -> println("track: ") }
     )
 }
