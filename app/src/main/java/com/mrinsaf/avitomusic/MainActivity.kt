@@ -25,6 +25,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.mrinsaf.feature_api_tracks.data.ui.screens.ChartTracksScreen
 import com.mrinsaf.feature_downloaded_tracks.ui.screens.DownloadedTracksScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -74,7 +75,7 @@ fun MusicApp() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = "downloaded_tracks",
+                startDestination = "api_tracks",
                 modifier = Modifier.fillMaxSize()
             ) {
                 composable("downloaded_tracks") {
@@ -82,7 +83,7 @@ fun MusicApp() {
                         navController = navController
                     )
                 }
-                // composable("api_tracks") { ApiTracksScreen(navController) }
+                 composable("api_tracks") { ChartTracksScreen(navController) }
                 // composable("player") { PlayerScreen(navController) }
             }
         }
