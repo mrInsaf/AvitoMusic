@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization") version "2.0.0"
     id ("kotlin-kapt")
 
@@ -38,6 +39,7 @@ android {
 
 dependencies {
     implementation("io.coil-kt:coil:2.4.0")
+    implementation("io.coil-kt:coil-compose:2.2.2")
 
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")

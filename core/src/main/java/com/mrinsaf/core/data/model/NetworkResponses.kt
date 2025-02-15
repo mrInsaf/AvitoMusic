@@ -8,10 +8,10 @@ data class ChartResponse(
 
 @Serializable
 data class Tracks(
-    val data: List<Track>
+    val data: List<ApiTrack>
 )
 
 @Serializable
 data class SearchResponse(
-    val data: List<Track>
+    val data: List<ApiTrack>
 )
