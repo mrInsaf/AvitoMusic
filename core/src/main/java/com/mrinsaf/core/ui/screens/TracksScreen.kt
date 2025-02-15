@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.mrinsaf.core.data.model.TrackUiModel
 import com.mrinsaf.core.ui.components.TrackItem
+import com.mrinsaf.core.ui.components.TrackSearchField
 
 @Composable
 fun TracksScreen(
@@ -29,8 +30,7 @@ fun TracksScreen(
             modifier = Modifier.padding(bottom = 12.dp)
         )
 
-
-        LazyColumn {
+        LazyColumn(modifier = Modifier.weight(1f)) {
             items(tracks) { track ->
                 TrackItem(
                     albumArtUrl = track.albumArtUrl,
@@ -40,6 +40,11 @@ fun TracksScreen(
                 )
             }
         }
+
+        TrackSearchField(
+            textFieldValue = query,
+            onValueChange = onQueryChange
+        )
     }
 }
 
