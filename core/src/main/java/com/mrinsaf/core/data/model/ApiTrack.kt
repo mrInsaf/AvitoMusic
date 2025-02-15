@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Track(
+data class ApiTrack(
     val id: Long,
     val title: String,
     @SerialName("title_short")
