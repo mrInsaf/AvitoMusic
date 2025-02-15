@@ -53,7 +53,6 @@ class MainActivity : ComponentActivity() {
             requestPermissions.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
 
-        enableEdgeToEdge()
         setContent {
             MusicApp()
         }
