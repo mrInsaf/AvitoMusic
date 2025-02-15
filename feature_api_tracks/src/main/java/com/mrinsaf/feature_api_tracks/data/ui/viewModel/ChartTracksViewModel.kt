@@ -26,7 +26,6 @@ class ChartTracksViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val tracks = deezerRepository.getChart()
-                println(tracks)
                 _uiState.value = ChartUiState(tracks)
             } catch (e: Exception) {
                 println("Ошибка при загрузке чарта: $e")
