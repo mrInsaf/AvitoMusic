@@ -49,6 +49,7 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.55")
     implementation(libs.androidx.ui.tooling.preview.android)
+    debugImplementation(libs.ui.tooling)
     kapt("com.google.dagger:hilt-compiler:2.55")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
