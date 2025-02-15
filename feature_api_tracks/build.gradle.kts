@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id ("kotlin-kapt")
+
+    id("com.google.dagger.hilt.android") version "2.55" apply true
 }
 
 android {
@@ -34,6 +37,12 @@ android {
 }
 
 dependencies {
+    implementation(project(":core"))
+
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("com.google.dagger:hilt-android:2.55")
+    kapt("com.google.dagger:hilt-compiler:2.55")
+
     implementation(libs.ui)
     implementation(libs.material3)
     implementation(libs.androidx.navigation.compose)
