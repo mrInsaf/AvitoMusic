@@ -12,6 +12,7 @@ class DeezerNetworkRepositoryImpl(private val deezerApi: DeezerApi) : DeezerNetw
         if (chartResponse.isSuccessful) {
             return chartResponse.body()?.tracks?.data ?: emptyList()
         } else {
+            println(chartResponse.message())
             throw Exception("Ошибка при получении чарта: ${chartResponse.code()}")
         }
     }
