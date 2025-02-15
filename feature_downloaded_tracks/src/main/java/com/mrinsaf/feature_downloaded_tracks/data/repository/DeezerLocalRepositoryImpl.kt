@@ -26,10 +26,8 @@ class DeezerLocalRepositoryImpl @Inject constructor(
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.ALBUM_ID
         )
-//        val selection = "${MediaStore.Audio.Media.IS_MUSIC} = 1"
 
         context.contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
-//            println("cursor: ${cursor.moveToNext()}")
             val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
             val titleColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)
             val artistColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
@@ -43,7 +41,6 @@ class DeezerLocalRepositoryImpl @Inject constructor(
 
                 val trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
                 val albumArtUri = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId)
-                println("$id, $title, $artist")
                 tracks.add(Track(id, title, artist, trackUri, albumArtUri))
             }
         }

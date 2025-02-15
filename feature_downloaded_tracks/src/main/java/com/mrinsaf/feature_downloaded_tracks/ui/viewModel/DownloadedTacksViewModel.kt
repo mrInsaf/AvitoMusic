@@ -17,12 +17,12 @@ class DownloadedTacksViewModel @Inject constructor(
         get() = _uiState
 
     init {
+        println("в локальных треках")
         loadTracks()
     }
 
     private fun loadTracks() {
         val localTracks = deezerLocalRepository.getDownloadedTracks()
-        println("localTracks: $localTracks")
         _uiState.update {
             it.copy(
                 tracks = localTracks
