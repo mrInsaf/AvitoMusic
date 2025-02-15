@@ -20,13 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mrinsaf.feature_api_tracks.data.ui.screens.ChartTracksScreen
+import com.mrinsaf.feature_api_tracks.data.ui.viewModel.ChartTracksViewModel
 import com.mrinsaf.feature_downloaded_tracks.ui.screens.DownloadedTracksScreen
+import com.mrinsaf.feature_downloaded_tracks.ui.viewModel.DownloadedTacksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,6 +64,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MusicApp() {
     val navController = rememberNavController()
+    val chartViewModel: ChartTracksViewModel = hiltViewModel()
+    val tracksViewModel: DownloadedTacksViewModel = hiltViewModel()
 
     Scaffold(
         bottomBar = {
@@ -80,10 +85,16 @@ fun MusicApp() {
             ) {
                 composable("downloaded_tracks") {
                     DownloadedTracksScreen(
-                        navController = navController
+                        navController = navController,
+                        trackViewModel = tracksViewModel
                     )
                 }
-                 composable("api_tracks") { ChartTracksScreen(navController) }
+                 composable("api_tracks") {
+                     ChartTracksScreen(
+                         navController,
+                         chartViewModel = chartViewModel
+                     )
+                 }
                 // composable("player") { PlayerScreen(navController) }
             }
         }
