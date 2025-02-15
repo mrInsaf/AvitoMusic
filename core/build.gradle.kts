@@ -48,6 +48,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
 
     implementation("com.google.dagger:hilt-android:2.55")
+    implementation(libs.androidx.ui.tooling.preview.android)
     kapt("com.google.dagger:hilt-compiler:2.55")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
