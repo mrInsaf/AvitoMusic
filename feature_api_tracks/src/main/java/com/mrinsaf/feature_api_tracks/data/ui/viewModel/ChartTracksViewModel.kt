@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +31,12 @@ class ChartTracksViewModel @Inject constructor(
             } catch (e: Exception) {
                 println("Ошибка при загрузке чарта: $e")
             }
+        }
+    }
+
+    fun onQueryChange(newQuery: String) {
+        _uiState.update {
+            it.copy(searchQuery = newQuery)
         }
     }
 }
