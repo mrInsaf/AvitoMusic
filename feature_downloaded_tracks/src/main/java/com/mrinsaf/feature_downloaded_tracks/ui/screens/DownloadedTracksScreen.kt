@@ -5,17 +5,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mrinsaf.core.data.model.TrackUiModel
 import com.mrinsaf.core.ui.screens.TracksScreen
+import com.mrinsaf.feature_downloaded_tracks.R
 import com.mrinsaf.feature_downloaded_tracks.ui.viewModel.DownloadedTacksViewModel
 
 @Composable
 fun DownloadedTracksScreen(
     navController: NavController,
-    trackViewModel: DownloadedTacksViewModel = hiltViewModel()
+    trackViewModel: DownloadedTacksViewModel
 ) {
     val uiState = trackViewModel.uiState.collectAsStateWithLifecycle()
     var query by remember { mutableStateOf("") }
@@ -35,6 +37,7 @@ fun DownloadedTracksScreen(
 
     TracksScreen(
         tracks = filteredTracks,
+        title = stringResource(R.string.downloadedScreenTitle),
         query = query,
         onQueryChange = { query = it },
         onTrackClick = { track -> println(track) }
