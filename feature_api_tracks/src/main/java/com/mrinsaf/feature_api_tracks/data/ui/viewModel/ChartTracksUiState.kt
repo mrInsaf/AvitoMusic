@@ -1,8 +1,10 @@
 package com.mrinsaf.feature_api_tracks.data.ui.viewModel
 
-import com.mrinsaf.core.data.model.ApiTrack
+import com.mrinsaf.core.data.model.TrackUiModel
 
 data class ChartUiState(
-    val tracks: List<ApiTrack> = emptyList(),
-    var searchQuery: String = ""
+    val tracks: List<TrackUiModel> = emptyList(),
+    var searchQuery: String = "",
+
+    val searchedTracks: List<TrackUiModel> = emptyList(),
 )

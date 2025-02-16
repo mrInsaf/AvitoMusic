@@ -2,6 +2,7 @@ package com.mrinsaf.feature_api_tracks.data.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mrinsaf.core.data.model.toTrackUiModel
 import com.mrinsaf.core.data.repository.network.DeezerNetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -31,8 +32,13 @@ class ChartTracksViewModel @Inject constructor(
     private fun fetchChartTracks() {
         viewModelScope.launch {
             try {
-                val tracks = deezerRepository.getChart()
-                _uiState.value = ChartUiState(tracks)
+                val chartResponse = deezerRepository.getChart()
+                val chartTracks = chartResponse.map { it.toTrackUiModel() }
+                _uiState.update {
+                    it.copy(
+                        tracks = chartTracks
+                    )
+                }
             } catch (e: Exception) {
                 println("Ошибка при загрузке чарта: $e")
             }
@@ -53,7 +59,15 @@ class ChartTracksViewModel @Inject constructor(
                 delay(500L)
                 val searchQuery = uiState.value.searchQuery
                 if (searchQuery.isNotEmpty()) {
-                    println("searching for ${uiState.value.searchQuery}")
+                    try {
+                        val searchedResponse = deezerRepository.searchTracks(searchQuery)
+                        val searchedTracks = searchedResponse.map { it.toTrackUiModel() }
+                        _uiState.update {
+                            it.copy(searchedTracks = searchedTracks)
+                        }
+                    } catch (e: Exception) {
+                        println(e)
+                    }
                 }
             }
         }

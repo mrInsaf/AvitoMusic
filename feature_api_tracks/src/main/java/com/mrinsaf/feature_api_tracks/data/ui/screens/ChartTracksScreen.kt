@@ -22,10 +22,11 @@ fun ChartTracksScreen(
     val uiState = chartViewModel.uiState.collectAsStateWithLifecycle()
 
     TracksScreen(
-        tracks = uiState.value.tracks.map { it.toTrackUiModel() },
-        title = stringResource(R.string.chartScreenTitle),
+        tracks = uiState.value.tracks,
+        searchedTracks = uiState.value.searchedTracks,
         query = uiState.value.searchQuery,
+        title = stringResource(R.string.chartScreenTitle),
         onQueryChange = { chartViewModel.onQueryChange(it) },
-        onTrackClick = { track -> println("track: ") }
+        onTrackClick = { track -> println("track: ") },
     )
 }
