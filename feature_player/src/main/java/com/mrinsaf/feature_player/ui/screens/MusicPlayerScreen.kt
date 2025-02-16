@@ -36,11 +36,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.mrinsaf.feature_player.R
 import com.mrinsaf.feature_player.ui.viewModel.MusicPlayerViewModel
 
 
@@ -89,13 +91,18 @@ fun MusicPlayerScreen(viewModel: MusicPlayerViewModel) {
 
         // Прогресс-бар
         Slider(
-            value = if (uiState.trackDuration > 0) uiState.currentPosition.toFloat() / uiState.trackDuration else 0f,
+            value = if (uiState.trackDuration > 0) {
+                // Проверка на корректность значений
+                val progress = uiState.currentPosition.toFloat() / uiState.trackDuration
+                if (progress.isNaN() || progress.isInfinite() || progress < 0) 0f else progress
+            } else {
+                0f
+            },
             onValueChange = { newValue ->
                 val seekPosition = (newValue * uiState.trackDuration).toLong()
                 viewModel.seekTo(seekPosition)
             }
         )
-
         // Тайминги
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -113,19 +120,19 @@ fun MusicPlayerScreen(viewModel: MusicPlayerViewModel) {
             modifier = Modifier.fillMaxWidth()
         ) {
             IconButton(onClick = { /* TODO: Добавить логику предыдущего трека */ }) {
-                Icon(Icons.Default.Build, contentDescription = "Previous")
+                Icon(painterResource(R.drawable.previoustrac), contentDescription = "Previous")
             }
 
-            IconButton(onClick = { viewModel.togglePlayPause() }) {
+            IconButton(onClick = { viewModel.togglePlayPause() }, ) {
                 Icon(
-                    if (uiState.isPlaying) Icons.Default.Home else Icons.Default.PlayArrow,
+                    if (uiState.isPlaying) painterResource(R.drawable.pause) else painterResource(R.drawable.play_button_arrowhead),
                     contentDescription = "Play/Pause",
                     modifier = Modifier.size(48.dp)
                 )
             }
 
             IconButton(onClick = { /* TODO: Добавить логику следующего трека */ }) {
-                Icon(Icons.Default.ShoppingCart, contentDescription = "Next")
+                Icon(painterResource(R.drawable.nexttrack), contentDescription = "Next")
             }
         }
     }

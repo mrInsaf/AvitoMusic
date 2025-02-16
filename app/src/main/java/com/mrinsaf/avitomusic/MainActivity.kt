@@ -108,7 +108,8 @@ fun MusicApp(modifier: Modifier, context: Context) {
                     DownloadedTracksScreen(
                         navController = navController,
                         downloadedTracksViewModel = tracksViewModel,
-                        coreViewModel = coreViewModel
+                        coreViewModel = coreViewModel,
+                        musicPlayerViewModel = musicPlayerViewModel
                     )
                 }
                  composable("api_tracks") {

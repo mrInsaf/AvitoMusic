@@ -19,6 +19,7 @@ fun ApiTrack.toTrackUiModel(): TrackUiModel {
         albumArtUrl = this.album.cover,
         title = this.title,
         artist = this.artist.name,
-        trackId = this.id
+        trackId = this.id,
+        trackUri = null
     )
 }

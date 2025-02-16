@@ -1,12 +1,14 @@
 package com.mrinsaf.feature_player.ui.viewModel
 
 import android.content.Context
+import androidx.annotation.OptIn
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import com.mrinsaf.core.data.repository.network.DeezerNetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +24,8 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class MusicPlayerViewModel @Inject constructor(
+class MusicPlayerViewModel @OptIn(UnstableApi::class)
+@Inject constructor(
     @ApplicationContext context: Context,
 ) : ViewModel() {
 
@@ -33,9 +36,19 @@ class MusicPlayerViewModel @Inject constructor(
 
     init {
         exoPlayer.addListener(object : Player.Listener {
-            override fun onPlaybackStateChanged(state: Int) {
-                _uiState.update {
-                    it.copy(isPlaying = exoPlayer.isPlaying)
+            @Deprecated("Deprecated in Java")
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+                // Проверяем, готов ли плеер (состояние "готов к воспроизведению")
+                if (playbackState == Player.STATE_READY && playWhenReady) {
+                    println("Player is ready.")
+
+                    // Обновляем состояние UI только когда плеер готов
+                    _uiState.update {
+                        it.copy(isPlaying = true, trackDuration = exoPlayer.duration.coerceAtLeast(1L))
+                    }
+
+                    // Запускаем обновление прогресса
+                    startProgressUpdates()
                 }
             }
         })
@@ -54,27 +67,32 @@ class MusicPlayerViewModel @Inject constructor(
         }
     }
 
+    @OptIn(UnstableApi::class)
     fun playTrack() {
         val currentState = _uiState.value
         val mediaItem = MediaItem.fromUri(currentState.trackUrl ?: return)
 
+        // Устанавливаем медиа и готовим плеер
         exoPlayer.setMediaItem(mediaItem)
+
+        // Подготовка плеера
         exoPlayer.prepare()
+
         exoPlayer.play()
-
-        _uiState.update { it.copy(isPlaying = true, trackDuration = exoPlayer.duration) }
-
-        startProgressUpdates()
     }
 
     fun togglePlayPause() {
         if (exoPlayer.isPlaying) {
             exoPlayer.pause()
+            println("paused")
         } else {
             exoPlayer.play()
         }
+
+        // Обновляем состояние UI в любом случае
         _uiState.update { it.copy(isPlaying = exoPlayer.isPlaying) }
     }
+
 
     fun seekTo(position: Long) {
         exoPlayer.seekTo(position)

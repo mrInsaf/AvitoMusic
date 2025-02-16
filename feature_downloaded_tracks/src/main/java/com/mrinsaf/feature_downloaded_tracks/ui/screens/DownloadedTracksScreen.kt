@@ -14,12 +14,14 @@ import com.mrinsaf.core.ui.screens.TracksScreen
 import com.mrinsaf.core.ui.viewModel.CoreViewModel
 import com.mrinsaf.feature_downloaded_tracks.R
 import com.mrinsaf.feature_downloaded_tracks.ui.viewModel.DownloadedTacksViewModel
+import com.mrinsaf.feature_player.ui.viewModel.MusicPlayerViewModel
 
 @Composable
 fun DownloadedTracksScreen(
     navController: NavController,
     coreViewModel: CoreViewModel,
-    downloadedTracksViewModel: DownloadedTacksViewModel
+    downloadedTracksViewModel: DownloadedTacksViewModel,
+    musicPlayerViewModel: MusicPlayerViewModel,
 ) {
     val downloadedTracksUiState = downloadedTracksViewModel.uiState.collectAsStateWithLifecycle()
     val coreUiState = coreViewModel.uiState.collectAsStateWithLifecycle()
@@ -29,7 +31,15 @@ fun DownloadedTracksScreen(
         title = stringResource(R.string.downloadedScreenTitle),
         query = downloadedTracksUiState.value.searchQuery,
         onQueryChange = { downloadedTracksViewModel.onQueryChange(it) },
-        onTrackClick = { track -> println(track) },
+        onTrackClick = {
+            musicPlayerViewModel.setCurrentTrack(
+                url = it.trackUri.toString(),
+                title = it.title,
+                artist = it.artist,
+                coverUrl = it.albumArtUrl
+            )
+            navController.navigate("player")
+        },
         searchedTracks = downloadedTracksUiState.value.filteredTracks,
         isBottomSheetOpened = coreUiState.value.isBottomSheetOpened,
         onBottomSheetClose = {
