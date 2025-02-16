@@ -21,26 +21,27 @@ fun DownloadedTracksScreen(
 ) {
     val uiState = trackViewModel.uiState.collectAsStateWithLifecycle()
     var query by remember { mutableStateOf("") }
+    val localTracks = uiState.value.tracks.map { track ->
+        TrackUiModel(
+            albumArtUrl = track.albumArtUri.toString(),
+            title = track.title,
+            artist = track.artist
+        )
+    }
 
-    val filteredTracks = uiState.value.tracks
-        .map { track ->
-            TrackUiModel(
-                albumArtUrl = track.albumArtUri.toString(),
-                title = track.title,
-                artist = track.artist
-            )
-        }
+    val filteredTracks = localTracks
         .filter {
             it.title.contains(query, ignoreCase = true) ||
                     it.artist.contains(query, ignoreCase = true)
         }
 
     TracksScreen(
-        tracks = filteredTracks,
+        tracks = localTracks,
         title = stringResource(R.string.downloadedScreenTitle),
         query = query,
         onQueryChange = { query = it },
-        onTrackClick = { track -> println(track) }
+        onTrackClick = { track -> println(track) },
+        searchedTracks = filteredTracks,
     )
 }
 
