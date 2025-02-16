@@ -11,37 +11,32 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.mrinsaf.core.data.model.TrackUiModel
 import com.mrinsaf.core.ui.screens.TracksScreen
+import com.mrinsaf.core.ui.viewModel.CoreViewModel
 import com.mrinsaf.feature_downloaded_tracks.R
 import com.mrinsaf.feature_downloaded_tracks.ui.viewModel.DownloadedTacksViewModel
 
 @Composable
 fun DownloadedTracksScreen(
     navController: NavController,
-    trackViewModel: DownloadedTacksViewModel
+    coreViewModel: CoreViewModel,
+    downloadedTracksViewModel: DownloadedTacksViewModel
 ) {
-    val uiState = trackViewModel.uiState.collectAsStateWithLifecycle()
-    var query by remember { mutableStateOf("") }
-    val localTracks = uiState.value.tracks.map { track ->
-        TrackUiModel(
-            albumArtUrl = track.albumArtUri.toString(),
-            title = track.title,
-            artist = track.artist
-        )
-    }
-
-    val filteredTracks = localTracks
-        .filter {
-            it.title.contains(query, ignoreCase = true) ||
-                    it.artist.contains(query, ignoreCase = true)
-        }
+    val downloadedTracksUiState = downloadedTracksViewModel.uiState.collectAsStateWithLifecycle()
+    val coreUiState = coreViewModel.uiState.collectAsStateWithLifecycle()
 
     TracksScreen(
-        tracks = localTracks,
+        tracks = downloadedTracksUiState.value.localTracks,
         title = stringResource(R.string.downloadedScreenTitle),
-        query = query,
-        onQueryChange = { query = it },
+        query = downloadedTracksUiState.value.searchQuery,
+        onQueryChange = { downloadedTracksViewModel.onQueryChange(it) },
         onTrackClick = { track -> println(track) },
-        searchedTracks = filteredTracks,
+        searchedTracks = downloadedTracksUiState.value.filteredTracks,
+        isBottomSheetOpened = coreUiState.value.isBottomSheetOpened,
+        onBottomSheetClose = {
+            coreViewModel.closeSearchBottomSheet()
+            downloadedTracksViewModel.clearSearchQuery()
+         },
+        onBottomSheetOpen = { coreViewModel.openSearchBottomSheet() },
     )
 }
 
