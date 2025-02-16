@@ -38,7 +38,7 @@ fun ChartTracksScreen(
                         url = it.preview,
                         title = it.title,
                         artist = it.artist.name,
-                        coverUrl = it.album.cover
+                        coverUrl = it.album.cover_big
                     )
                 }
                 navController.navigate("player")

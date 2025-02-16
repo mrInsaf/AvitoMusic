@@ -90,7 +90,7 @@ fun TracksScreen(
                         textFieldValue = query,
                         onValueChange = onQueryChange,
                         searchedTracks = searchedTracks,
-                        onTrackClick = { println("track clicked") },
+                        onTrackClick = { onTrackClick(it) },
                         modifier = Modifier,
                         onDismissRequest = onBottomSheetClose
                     )
