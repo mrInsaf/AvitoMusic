@@ -1,6 +1,7 @@
 package com.mrinsaf.feature_downloaded_tracks.ui.viewModel
 
 import androidx.lifecycle.ViewModel
+import com.mrinsaf.core.data.model.TrackUiModel
 import com.mrinsaf.feature_downloaded_tracks.data.repository.DeezerLocalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,10 +23,41 @@ class DownloadedTacksViewModel @Inject constructor(
     }
 
     private fun loadTracks() {
-        val localTracks = deezerLocalRepository.getDownloadedTracks()
+        val tracks = deezerLocalRepository.getDownloadedTracks()
+
+        val localTracks = tracks.map { track ->
+            TrackUiModel(
+                albumArtUrl = track.albumArtUri.toString(),
+                title = track.title,
+                artist = track.artist
+            )
+        }
+
         _uiState.update {
             it.copy(
-                tracks = localTracks
+                localTracks = localTracks
+            )
+        }
+    }
+
+    fun clearSearchQuery() {
+        _uiState.update {
+            it.copy(searchQuery = "")
+        }
+    }
+
+    fun onQueryChange(newQuery: String) {
+        val filteredTracks = uiState.value.localTracks
+            .filter {
+                it.title.contains(newQuery, ignoreCase = true) ||
+                        it.artist.contains(newQuery, ignoreCase = true)
+            }
+        println("filteredTracks: $filteredTracks")
+
+        _uiState.update {
+            it.copy(
+                searchQuery = newQuery,
+                filteredTracks = filteredTracks
             )
         }
     }
