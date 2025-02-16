@@ -10,7 +10,7 @@ data class ApiTrack(
     val album: Album,
     val duration: Int,
     val link: String,
-    val position: Int,
+    val position: Int? = null,
 )
 
 fun ApiTrack.toTrackUiModel(): TrackUiModel {
