@@ -46,6 +46,7 @@ dependencies {
     implementation("androidx.media3:media3-ui:1.5.1")
 
     implementation("com.google.dagger:hilt-android:2.55")
+    implementation(project(":core"))
     kapt("com.google.dagger:hilt-compiler:2.55")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")

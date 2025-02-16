@@ -11,12 +11,14 @@ data class ApiTrack(
     val duration: Int,
     val link: String,
     val position: Int? = null,
+    val preview: String,
 )
 
 fun ApiTrack.toTrackUiModel(): TrackUiModel {
     return TrackUiModel(
         albumArtUrl = this.album.cover,
         title = this.title,
-        artist = this.artist.name
+        artist = this.artist.name,
+        trackId = this.id
     )
 }

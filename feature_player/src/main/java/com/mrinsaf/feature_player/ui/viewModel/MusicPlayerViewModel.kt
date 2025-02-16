@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import com.mrinsaf.core.data.repository.network.DeezerNetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -22,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MusicPlayerViewModel @Inject constructor(
-    @ApplicationContext context: Context
+    @ApplicationContext context: Context,
 ) : ViewModel() {
 
     private val exoPlayer = ExoPlayer.Builder(context).build()
@@ -39,6 +40,8 @@ class MusicPlayerViewModel @Inject constructor(
             }
         })
     }
+
+
 
     fun setCurrentTrack(url: String, title: String, artist: String, coverUrl: String?) {
         _uiState.update {
@@ -92,11 +95,3 @@ class MusicPlayerViewModel @Inject constructor(
         exoPlayer.release()
     }
 }
-
-data class Track(
-    val title: String,
-    val artist: String,
-    val album: String?,
-    val coverUrl: String?,
-    val url: String
-)

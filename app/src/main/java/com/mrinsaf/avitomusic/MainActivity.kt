@@ -101,7 +101,7 @@ fun MusicApp(modifier: Modifier, context: Context) {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = "player",
+                startDestination = "api_tracks",
                 modifier = modifier.fillMaxSize()
             ) {
                 composable("downloaded_tracks") {
@@ -116,6 +116,7 @@ fun MusicApp(modifier: Modifier, context: Context) {
                          navController,
                          chartViewModel = chartViewModel,
                          coreViewModel = coreViewModel,
+                         musicPlayerViewModel = musicPlayerViewModel,
                      )
                  }
                  composable("player") { MusicPlayerScreen(

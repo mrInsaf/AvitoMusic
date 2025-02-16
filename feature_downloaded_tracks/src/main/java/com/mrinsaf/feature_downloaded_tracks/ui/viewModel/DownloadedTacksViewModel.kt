@@ -29,7 +29,8 @@ class DownloadedTacksViewModel @Inject constructor(
             TrackUiModel(
                 albumArtUrl = track.albumArtUri.toString(),
                 title = track.title,
-                artist = track.artist
+                artist = track.artist,
+                trackId = track.id
             )
         }
 
