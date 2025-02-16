@@ -19,6 +19,7 @@ class DeezerNetworkRepositoryImpl(private val deezerApi: DeezerApi) : DeezerNetw
 
     override suspend fun searchTracks(query: String): List<ApiTrack> {
         val searchResponse = deezerApi.search(query)
+        println(searchResponse.body())
 
         if (searchResponse.isSuccessful) {
             return searchResponse.body()?.data ?: emptyList()

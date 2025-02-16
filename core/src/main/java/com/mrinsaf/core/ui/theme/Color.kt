@@ -1,4 +1,4 @@
-package com.mrinsaf.avitomusic.ui.theme
+package com.mrinsaf.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -49,6 +49,7 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.55")
     implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.androidx.foundation.layout.android)
     debugImplementation(libs.ui.tooling)
     kapt("com.google.dagger:hilt-compiler:2.55")
 
