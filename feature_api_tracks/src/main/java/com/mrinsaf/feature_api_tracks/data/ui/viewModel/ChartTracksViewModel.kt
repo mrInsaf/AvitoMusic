@@ -46,12 +46,15 @@ class ChartTracksViewModel @Inject constructor(
     }
 
     fun onQueryChange(newQuery: String) {
-        val currentTime = System.currentTimeMillis()
-
         _uiState.update {
             it.copy(searchQuery = newQuery)
         }
 
+        if (newQuery.isEmpty()) {
+            this.clearSearchedTracks()
+        }
+
+        val currentTime = System.currentTimeMillis()
         if (currentTime - lastQueryTime > throttleDelay) {
             println("uiState.value.searchQuery: ${uiState.value.searchQuery}")
             lastQueryTime = currentTime
@@ -70,6 +73,18 @@ class ChartTracksViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun clearSearchQuery() {
+        _uiState.update {
+            it.copy(searchQuery =  "")
+        }
+    }
+
+    fun clearSearchedTracks() {
+        _uiState.update {
+            it.copy(searchedTracks = emptyList())
         }
     }
 
