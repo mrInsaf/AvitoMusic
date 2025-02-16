@@ -16,7 +16,7 @@ data class ApiTrack(
 
 fun ApiTrack.toTrackUiModel(): TrackUiModel {
     return TrackUiModel(
-        albumArtUrl = this.album.cover,
+        albumArtUrl = this.album.cover_big,
         title = this.title,
         artist = this.artist.name,
         trackId = this.id,
