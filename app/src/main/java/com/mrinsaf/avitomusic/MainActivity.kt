@@ -3,6 +3,7 @@ package com.mrinsaf.avitomusic
 import android.os.Build
 import android.os.Bundle
 import android.Manifest
+import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,6 +42,8 @@ import com.mrinsaf.feature_api_tracks.data.ui.screens.ChartTracksScreen
 import com.mrinsaf.feature_api_tracks.data.ui.viewModel.ChartTracksViewModel
 import com.mrinsaf.feature_downloaded_tracks.ui.screens.DownloadedTracksScreen
 import com.mrinsaf.feature_downloaded_tracks.ui.viewModel.DownloadedTacksViewModel
+import com.mrinsaf.feature_player.ui.screens.MusicPlayerScreen
+import com.mrinsaf.feature_player.ui.viewModel.MusicPlayerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,7 +70,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             AvitoMusicTheme(dynamicColor = false) {
                 MusicApp(
-                    modifier = Modifier.imePadding()
+                    modifier = Modifier.imePadding(),
+                    context = this
                 )
             }
         }
@@ -76,11 +80,12 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MusicApp(modifier: Modifier) {
+fun MusicApp(modifier: Modifier, context: Context) {
     val navController = rememberNavController()
     val chartViewModel: ChartTracksViewModel = hiltViewModel()
     val tracksViewModel: DownloadedTacksViewModel = hiltViewModel()
     val coreViewModel: CoreViewModel = hiltViewModel()
+    val musicPlayerViewModel: MusicPlayerViewModel = hiltViewModel()
 
     val isKeyboardOpen by keyboardVisibilityAsState()
 
@@ -103,7 +108,8 @@ fun MusicApp(modifier: Modifier) {
                     DownloadedTracksScreen(
                         navController = navController,
                         downloadedTracksViewModel = tracksViewModel,
-                        coreViewModel = coreViewModel
+                        coreViewModel = coreViewModel,
+                        musicPlayerViewModel = musicPlayerViewModel
                     )
                 }
                  composable("api_tracks") {
@@ -111,9 +117,12 @@ fun MusicApp(modifier: Modifier) {
                          navController,
                          chartViewModel = chartViewModel,
                          coreViewModel = coreViewModel,
+                         musicPlayerViewModel = musicPlayerViewModel,
                      )
                  }
-                // composable("player") { PlayerScreen(navController) }
+                 composable("player") { MusicPlayerScreen(
+                     viewModel = musicPlayerViewModel
+                 ) }
             }
         }
     }

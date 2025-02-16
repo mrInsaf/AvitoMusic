@@ -28,4 +28,15 @@ class DeezerNetworkRepositoryImpl(private val deezerApi: DeezerApi) : DeezerNetw
         }
     }
 
+    override suspend fun getTrack(trackId: Long): ApiTrack {
+        val response = deezerApi.getTrack(trackId)
+        if (response.isSuccessful) {
+            return response.body()!!
+        }
+        else {
+            throw Exception("Ошибка при поиске трека: ${response.code()}")
+        }
+
+    }
+
 }
