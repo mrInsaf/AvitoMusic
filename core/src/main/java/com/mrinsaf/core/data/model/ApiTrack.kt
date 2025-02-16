@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ApiTrack(
-    val id: Int,
+    val id: Long,
     val title: String,
     val artist: Artist,
     val album: Album,
