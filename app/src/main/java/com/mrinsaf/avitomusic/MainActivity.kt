@@ -36,6 +36,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mrinsaf.core.ui.theme.AvitoMusicTheme
+import com.mrinsaf.core.ui.viewModel.CoreViewModel
 import com.mrinsaf.feature_api_tracks.data.ui.screens.ChartTracksScreen
 import com.mrinsaf.feature_api_tracks.data.ui.viewModel.ChartTracksViewModel
 import com.mrinsaf.feature_downloaded_tracks.ui.screens.DownloadedTracksScreen
@@ -79,6 +80,7 @@ fun MusicApp(modifier: Modifier) {
     val navController = rememberNavController()
     val chartViewModel: ChartTracksViewModel = hiltViewModel()
     val tracksViewModel: DownloadedTacksViewModel = hiltViewModel()
+    val coreViewModel: CoreViewModel = hiltViewModel()
 
     val isKeyboardOpen by keyboardVisibilityAsState()
 
@@ -100,13 +102,15 @@ fun MusicApp(modifier: Modifier) {
                 composable("downloaded_tracks") {
                     DownloadedTracksScreen(
                         navController = navController,
-                        trackViewModel = tracksViewModel
+                        downloadedTracksViewModel = tracksViewModel,
+                        coreViewModel = coreViewModel
                     )
                 }
                  composable("api_tracks") {
                      ChartTracksScreen(
                          navController,
-                         chartViewModel = chartViewModel
+                         chartViewModel = chartViewModel,
+                         coreViewModel = coreViewModel,
                      )
                  }
                 // composable("player") { PlayerScreen(navController) }
