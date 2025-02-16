@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.Manifest
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -16,8 +18,15 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,6 +35,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.mrinsaf.core.ui.theme.AvitoMusicTheme
 import com.mrinsaf.feature_api_tracks.data.ui.screens.ChartTracksScreen
 import com.mrinsaf.feature_api_tracks.data.ui.viewModel.ChartTracksViewModel
 import com.mrinsaf.feature_downloaded_tracks.ui.screens.DownloadedTracksScreen
@@ -54,17 +64,23 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            MusicApp()
+            AvitoMusicTheme(dynamicColor = false) {
+                MusicApp(
+                    modifier = Modifier.imePadding()
+                )
+            }
         }
     }
 }
 
 
 @Composable
-fun MusicApp() {
+fun MusicApp(modifier: Modifier) {
     val navController = rememberNavController()
     val chartViewModel: ChartTracksViewModel = hiltViewModel()
     val tracksViewModel: DownloadedTacksViewModel = hiltViewModel()
+
+    val isKeyboardOpen by keyboardVisibilityAsState()
 
     Scaffold(
         bottomBar = {
@@ -72,15 +88,14 @@ fun MusicApp() {
         },
     ) { innerPadding ->
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(12.dp)
         ) {
             NavHost(
                 navController = navController,
                 startDestination = "api_tracks",
-                modifier = Modifier.fillMaxSize()
+                modifier = modifier.fillMaxSize()
             ) {
                 composable("downloaded_tracks") {
                     DownloadedTracksScreen(
@@ -123,6 +138,22 @@ fun BottomNavigationBar(navController: NavController) {
             )
         }
     }
+}
+
+@Composable
+fun keyboardVisibilityAsState(): State<Boolean> {
+    val density = LocalDensity.current
+    val isKeyboardOpen = WindowInsets.ime.getBottom(density) > 0
+
+    val keyboardState = remember { mutableStateOf(isKeyboardOpen) }
+
+    LaunchedEffect(isKeyboardOpen) {
+        snapshotFlow { isKeyboardOpen }
+            .collect { open ->
+                keyboardState.value = open
+            }
+    }
+    return keyboardState
 }
 
 data class BottomNavItem(val icon: Painter, val route: String)
